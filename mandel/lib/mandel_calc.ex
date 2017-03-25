@@ -17,6 +17,13 @@ defmodule Mandel.Calc do
     To calculate a  100x100 Mandelbrot set, use the following arguments
 
     set = Mandel.Calc.set2({-2.0, 0.5, -1.25, 1.25}, {100,100}, 80)
+
+    to write a raw file to a textfile:
+
+    set = Mandel.Calc.set2({-2.0, 0.5, -1.25, 1.25}, {100,100}, 80)
+    |> Mandel.Calc.raw_iter
+    |> Mandel.Calc.write("/tmp/file.txt")
+
   """
   def set2({xmin, xmax, ymin, ymax}, {width, height}, max_iter) do
 
@@ -70,7 +77,7 @@ defmodule Mandel.Calc do
     {:ok, f} = File.open(filename, [:write])
     for i<-0..length(raw_set) - 1 do
       Enum.at(raw_set, i) |>
-      Enum.each(fn(j) -> IO.write f, "#{inspect j} " end)
+      Enum.each(fn(j) -> :io.format(f, "~4..0B ", [j]) end)
       IO.write f, "\n"
     end
     File.close(f)
