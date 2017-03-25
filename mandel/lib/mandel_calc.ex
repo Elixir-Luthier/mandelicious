@@ -66,6 +66,15 @@ defmodule Mandel.Calc do
     |> Enum.max
   end
 
+  def write(raw_set, filename) do
+    {:ok, f} = File.open(filename, [:write])
+    for i<-0..length(raw_set) - 1 do
+      Enum.at(raw_set, i) |>
+      Enum.each(fn(j) -> IO.write f, "#{inspect j} " end)
+      IO.write f, "\n"
+    end
+    File.close(f)
+  end
 
   defp raw_row(row) do
     Enum.reduce(0..length(row)-1, [], fn(i, acc) ->
@@ -77,7 +86,7 @@ defmodule Mandel.Calc do
 
     delta = (max - min)/width
     Enum.reduce(0..width-1, [], fn(x, acc) ->
-       acc ++ [ x * delta]
+       acc ++ [ min + x*delta]
     end
     )
   end
