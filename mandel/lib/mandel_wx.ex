@@ -57,7 +57,7 @@ defmodule Mandel.Graph do
   def gen_colors(n) do
     delta = 255/n
     Enum.reduce(0..n-1, [], fn(r, acc)->
-       acc ++ [{round(r*delta),round(r*delta), round(r*delta), 255}]
+       acc ++ [{4*round(r*delta),2*round(r*delta), 3*round(r*delta), :random.uniform(255)}]
     end)
   end
 end

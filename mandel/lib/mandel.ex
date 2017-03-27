@@ -12,10 +12,10 @@ defmodule Mandel do
       :world
 
   """
-  def graph(colors \\ 6, iter \\ 500) do
-set = Mandel.Calc.set2({-2.50, 2.50, -2.25, 2.25}, {500,500}, iter)
+  def graph(width \\ 1000, height \\ 1000, colors \\ 6, iter \\ 500, point \\ {-2.50, 2.50, -2.25, 2.25}) do
+set = Mandel.Calc.set2(point, {width, height}, iter)
 |> Mandel.Calc.raw_iter
 
-Mandel.Graph.start(set, 500, 500, colors)
+Mandel.Graph.start(set, width, height, colors)
   end
 end
