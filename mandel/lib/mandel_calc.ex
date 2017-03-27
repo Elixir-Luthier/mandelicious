@@ -17,13 +17,6 @@ defmodule Mandel.Calc do
     To calculate a  100x100 Mandelbrot set, use the following arguments
 
     set = Mandel.Calc.set2({-2.0, 0.5, -1.25, 1.25}, {100,100}, 80)
-
-    to write a raw file to a textfile:
-
-    set = Mandel.Calc.set2({-2.0, 0.5, -1.25, 1.25}, {100,100}, 80)
-    |> Mandel.Calc.raw_iter
-    |> Mandel.Calc.write("/tmp/file.txt")
-
   """
   def set2({xmin, xmax, ymin, ymax}, {width, height}, max_iter) do
 
@@ -55,16 +48,16 @@ defmodule Mandel.Calc do
       end)
   end
 
-  @doc """
+    @doc """
 
-    raw_iter(set) returns the m x n lists of interations without the re,im compoments
+      raw_iter(set) returns the m x n lists of interations without the re,im compoments
 
-  """
-  def raw_iter(set) do
-    Enum.reduce(0..length(set)-1, [], fn(i, acc) ->
-        acc ++ [raw_row(Enum.at(set, i))]
-    end)
-  end
+    """
+    def raw_iter(set) do
+      Enum.reduce(0..length(set)-1, [], fn(i, acc) ->
+          acc ++ [raw_row(Enum.at(set, i))]
+      end)
+    end
 
   def max_iter(set) do
     for i<- 0..length(set) - 1 do
@@ -73,15 +66,6 @@ defmodule Mandel.Calc do
     |> Enum.max
   end
 
-  def write(raw_set, filename) do
-    {:ok, f} = File.open(filename, [:write])
-    for i<-0..length(raw_set) - 1 do
-      Enum.at(raw_set, i) |>
-      Enum.each(fn(j) -> :io.format(f, "~4..0B ", [j]) end)
-      IO.write f, "\n"
-    end
-    File.close(f)
-  end
 
   defp raw_row(row) do
     Enum.reduce(0..length(row)-1, [], fn(i, acc) ->
@@ -93,7 +77,7 @@ defmodule Mandel.Calc do
 
     delta = (max - min)/width
     Enum.reduce(0..width-1, [], fn(x, acc) ->
-       acc ++ [ min + x*delta]
+       acc ++ [ min + x * delta]
     end
     )
   end
